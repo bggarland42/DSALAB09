@@ -35,16 +35,15 @@ T** Sort<T>::quickSort(T** items, int numItems, int (*compare) (T* one, T* two))
    //DO THIS
    //create a new array that will be sorted and returned
    //this is in case the original, unsorted array is also needed
-
-
-
-
-
-
-
-
-
-
+   T** sorted = new T*[numItems];
+   for(int i=0; i<numItems; i++)
+   {
+	   sorted[i]=items[i];
+   }
+   
+   _quickSort(sorted, 0, numItems-1, compare);
+   
+   return sorted;
 }
 
 template < class T >
@@ -56,17 +55,10 @@ void Sort<T>::_quickSort(T** items, int first, int last, int (*compare) (T* one,
    //make the necessary partition and recursive calls for quick sort
    if (first < last)
    {
+	   pivotIndex = partition(items, first, last, compare);
 
-
-
-
-
-
-
-
-
-
-
+	   _quickSort(items, first, pivotIndex-1, compare);
+	   _quickSort(items, pivotIndex+1, last, compare);
    }  
 }  
 
@@ -80,25 +72,27 @@ int Sort<T>::partition(T** items, int first, int last, int (*compare) (T* one, T
    T* temp; 
 
    //initially, choosePivot does nothing           
-   choosePivot(items, first, last); 
+   choosePivot(items, first, last);
+   int lastS1=first;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-     
-
+	
+   for(int i=first+1; i<=last; i++)
+   {
+	   int comp = (*compare)(items[i],items[first]);
+	   
+	   if(comp<0)
+	   {
+		   lastS1++;
+		   temp = items[lastS1];
+		   items[lastS1]=items[i];
+		   items[i]=temp;
+	   }
+   }
+   temp=items[first];
+   items[first]=items[lastS1];
+   items[lastS1]=temp;
+   
+   return lastS1;
 }
 
 template < class T >
@@ -107,13 +101,12 @@ void Sort<T>::choosePivot(T** items, int first, int last)
    //DO THIS
    //find a better item to be the partition than simply using the item in the first index
    //you will need to swap
-
-
-
-
-
-
-
+   int mid=(first+(last-first)/2);
+   T* temp;
+   
+   temp = items[mid];
+   items[mid]=items[first];
+   items[first]=temp;
 }
 
 //no work below this point

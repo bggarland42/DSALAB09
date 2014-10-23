@@ -35,6 +35,7 @@ T** Sort<T>::quickSort(T** items, int numItems, int (*compare) (T* one, T* two))
    //DO THIS
    //create a new array that will be sorted and returned
    //this is in case the original, unsorted array is also needed
+<<<<<<< HEAD
    T** sorted = new T*[numItems];
    for(int i=0; i<numItems; i++)
    {
@@ -43,6 +44,18 @@ T** Sort<T>::quickSort(T** items, int numItems, int (*compare) (T* one, T* two))
    
    _quickSort(sorted, 0, numItems-1, compare);
    
+=======
+
+   T** sorted = new T* [numItems];
+
+   for(int i = 0; i < numItems; i++)
+   {
+    sorted[i] = items[i];
+     }
+
+   _quickSort(sorted, 0, numItems - 1, compare);   
+
+>>>>>>> 6b0e70fc83278a5d3f3b4fd456ba88a58a78ede5
    return sorted;
 }
 
@@ -55,10 +68,18 @@ void Sort<T>::_quickSort(T** items, int first, int last, int (*compare) (T* one,
    //make the necessary partition and recursive calls for quick sort
    if (first < last)
    {
+<<<<<<< HEAD
 	   pivotIndex = partition(items, first, last, compare);
 
 	   _quickSort(items, first, pivotIndex-1, compare);
 	   _quickSort(items, pivotIndex+1, last, compare);
+=======
+     pivotIndex = partition(items, first, last, compare);
+
+     _quickSort(items, first, pivotIndex - 1, compare);
+     _quickSort(items, pivotIndex + 1, last, compare);
+
+>>>>>>> 6b0e70fc83278a5d3f3b4fd456ba88a58a78ede5
    }  
 }  
 
@@ -72,8 +93,36 @@ int Sort<T>::partition(T** items, int first, int last, int (*compare) (T* one, T
    T* temp; 
 
    //initially, choosePivot does nothing           
+<<<<<<< HEAD
    choosePivot(items, first, last);
    int lastS1=first;
+=======
+   choosePivot(items, first, last); 
+
+   int lastS1 = first;
+
+   for(int i = first + 1; i < last; i++)
+   {
+      int comp = (*compare) (items[i], items[first]);
+      
+      if(comp < 0)
+      {
+        lastS1++;
+        temp = items[lastS1];
+        items[lastS1] = items[first];
+        items[first] = temp;
+
+                }
+
+     }
+
+  temp = items[lastS1];
+  items[lastS1] = items[first];
+  items[first] = temp;
+
+ return lastS1;
+     
+>>>>>>> 6b0e70fc83278a5d3f3b4fd456ba88a58a78ede5
 
 	
    for(int i=first+1; i<=last; i++)
